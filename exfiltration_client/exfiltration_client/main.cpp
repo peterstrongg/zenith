@@ -19,13 +19,13 @@ int main(int argc, char** argv) {
 	// Chrome
 	if (verify_browser_installation(L"Software\\Google\\Chrome"))
 	{
-
+		
 	}
 
 	// Edge
 	if (verify_browser_installation(L"Software\\Microsoft\\Edge"))
 	{
-
+		
 	}
 
 	return 0;
