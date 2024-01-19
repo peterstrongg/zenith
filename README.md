@@ -1,5 +1,5 @@
 # Zenith
-The Zenith project started in January 2024 as a personal project to simulate a cyber attack against commonly used web browsers installed on a target Windows 10/11 endpoint. Zenith consists of two major components. The exfiltration client and the analysis scripts.
+The Zenith project started in January 2024 as a personal project to simulate a cyber attack against commonly used web browsers installed on a target Windows 10 or Windows 11 endpoint. Zenith consists of two major components. The exfiltration client and the analysis scripts.
 
 
 ## Exfiltration Client
