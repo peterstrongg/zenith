@@ -9,9 +9,11 @@ The Exfiltration Client was designed as a deployable executable written in C++. 
 2. Create extraction point for data to be exfiltrated from
 3. Scan file hierarchy of installed browsers for files containing sensitive information
 
-Browser installations are verified by scanning the targets registry for entries that are created when the target browser is installed
+Browser installations are verified by scanning the targets registry for entries that are created when the target browser is installed. The exfiltration script checks for the existance of each of the following registry keys:
 
-- Firefox: `HKEY_CURRENT_USER\Software\Mozilla\Firefox` 
+- `HKEY_CURRENT_USER\Software\Mozilla\Firefox` (Firefox)
+- `HKEY_CURRENT_USER\Software\Google\Chrome` (Google Chrome)
+- `HKEY_CURRENT_USER\Software\Microsoft\Edge` (Microsoft Edge)
 
 
 
