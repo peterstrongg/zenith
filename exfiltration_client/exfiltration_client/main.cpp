@@ -33,19 +33,31 @@ int main(int argc, char** argv) {
 	// Firefox
 	if (verify_browser_installation(L"Software\\Mozilla\\Firefox"))
 	{	
-		collect_firefox_data(path_to_extraction_directory);
+		CreateDirectory(
+			convert_to_wchar((path_to_extraction_directory + "\\Firefox").c_str()), 
+			NULL
+		);
+		collect_firefox_data(path_to_extraction_directory + "\\Firefox");
 	}
 
 	// Chrome
 	if (verify_browser_installation(L"Software\\Google\\Chrome"))
 	{
-		collect_chrome_data(path_to_extraction_directory);
+		CreateDirectory(
+			convert_to_wchar((path_to_extraction_directory + "\\Chrome").c_str()),
+			NULL
+		);
+		collect_chrome_data(path_to_extraction_directory + "\\Chrome");
 	}
 
 	// Edge
 	if (verify_browser_installation(L"Software\\Microsoft\\Edge"))
 	{
-		collect_edge_data(path_to_extraction_directory);
+		CreateDirectory(
+			convert_to_wchar((path_to_extraction_directory + "\\Edge").c_str()),
+			NULL
+		);
+		collect_edge_data(path_to_extraction_directory + "\\Edge");
 	}
 
 	return 0;
