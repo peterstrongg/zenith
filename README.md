@@ -3,6 +3,7 @@ The Zenith project started in January 2024 as a personal project to simulate a c
 
 # Exfiltration Client
 The first of which is the deployable exfiltration script written in C++. The script was designed to be executed on a target endpoint and consists of 3 stages which are as follows: 
-### Verify browser installations
+1. Verify Browser Installation
+  - test
 
 
