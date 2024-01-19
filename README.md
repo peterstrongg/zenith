@@ -2,7 +2,7 @@
 The Zenith project started in January 2024 as a personal project to simulate a cyber attack against commonly used web browsers installed on a target Windows 10/11 endpoint. Zenith consists of two major components. The exfiltration client and the analysis scripts.
 
 
-# Exfiltration Client
+## Exfiltration Client
 The Exfiltration Client was designed as a deployable executable written in C++. The script was designed to be executed on a target endpoint and consists of 3 stages which are as follows: 
 
 1. Verify that target web-browsers are installed (Chrome, Firefox, and Edge)
