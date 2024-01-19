@@ -11,7 +11,7 @@ The Exfiltration Client was designed as a deployable executable written in C++. 
 
 Browser installations are verified by scanning the targets registry for entries that are created when the target browser is installed
 
-- Firefox: `HKEY_CURRENT_USER\Software\Mozilla\Firefox`
+- Firefox: `HKEY_CURRENT_USER\Software\Mozilla\Firefox` 
 
 
 
