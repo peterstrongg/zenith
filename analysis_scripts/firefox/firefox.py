@@ -1,3 +1,4 @@
+import argparse
 import sqlite3
 
 class Firefox:
@@ -5,4 +6,9 @@ class Firefox:
         pass
 
 if __name__ == "__main__":
-    print("Instantiated")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", required=True, help="path to desired file")
+    parser.add_argument("-t", "--type", required=True, help="type of file to parse (places, logins, key4, cookies)")
+    args = parser.parse_args()
+
+    
