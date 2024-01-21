@@ -12,10 +12,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--file", required=True, help="path to desired file")
     parser.add_argument("-t", "--type", required=True, help="type of file to parse (places, logins, key4, cookies)")
+    parser.add_argument("-o", "--output_location", required=True, help="path to output directory")
     args = parser.parse_args()
     
     file_type_selection = args.type
     path_to_file = args.file
+    output_location = args.output_location
 
     if file_type_selection == "places":
         pass
