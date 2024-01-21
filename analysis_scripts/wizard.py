@@ -1,4 +1,4 @@
-from firefox import firefox
+from browsers import firefox
 
 def print_browser_selection_menu():
     print("Select a browser to analyze to get started:")
@@ -12,7 +12,7 @@ def print_browser_selection_menu():
     return choice
 
 def analyze_firefox():
-    ffox = firefox.Firefox()
+    pass
 
 def analyze_chrome():
     pass
